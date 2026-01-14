@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 export default function PayrollLandingPage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [isLogin, setIsLogin] = useState(false);
 
   const router = useRouter();
 
@@ -20,6 +21,17 @@ export default function PayrollLandingPage() {
   const rerout = () => {
     router.push('/signlog')
   }
+
+  const goProfile = () => {
+    router.push('/profile')
+  }
+
+  useEffect(() => {
+    const role = localStorage.getItem("role");
+    if(role){
+      setIsLogin(true)
+    }
+  },[])
 
   return (
     <div className="min-h-screen bg-neutral-50 text-neutral-900">
@@ -37,10 +49,12 @@ export default function PayrollLandingPage() {
               <a href="#features" className="text-neutral-600 hover:text-neutral-900 transition-colors">Features</a>
               <a href="#pricing" className="text-neutral-600 hover:text-neutral-900 transition-colors">Pricing</a>
               <a href="#about" className="text-neutral-600 hover:text-neutral-900 transition-colors">About</a>
-              <button onClick={rerout} className="px-4 py-2 text-neutral-600 hover:text-neutral-900 transition-colors">Login</button>
-              <button onClick={rerout} className="px-6 py-2 bg-neutral-900 text-white rounded-lg font-medium hover:bg-neutral-800 transition-colors">
+              {isLogin ? '' :<button onClick={rerout} className="px-4 py-2 text-neutral-600 hover:text-neutral-900 transition-colors">Login</button>}
+              {isLogin ? <div onClick={goProfile}className="w-10 h-10 bg-neutral-900 text-white rounded-lg flex items-center justify-center text-sm font-bold">
+                            AP
+                        </div> : <button onClick={rerout} className="px-6 py-2 bg-neutral-900 text-white rounded-lg font-medium hover:bg-neutral-800 transition-colors">
                 Get Started
-              </button>
+              </button>} 
             </div>
 
             {/* Mobile Menu Button */}

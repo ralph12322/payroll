@@ -52,6 +52,8 @@ export default function AuthPages() {
                 if (!res.ok) {
                     toast.error(data.message || "Login Failed")
                 } else {
+                    localStorage.setItem("role", data.role)
+                    localStorage.setItem("name", data.name)
                     toast.success(data.message)
                     if (data.role === 'client') {
                         router.push('/client')

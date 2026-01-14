@@ -1,6 +1,8 @@
 'use client'
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Users, DollarSign, FileText, Calendar, Download, Eye, ChevronRight, Bell, Settings, LogOut, Search, Filter, TrendingUp, Clock, CheckCircle, AlertCircle, Plus } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import Navbar from '@/components/Navbar';
 
 export default function ClientDashboard() {
     const [activeTab, setActiveTab] = useState('overview');
@@ -42,30 +44,20 @@ export default function ClientDashboard() {
         }).format(amount);
     };
 
+    const router = useRouter();
+    useEffect(() => {
+        const role = localStorage.getItem("role");
+        
+
+        if(role !== "client"){
+            router.push('/')
+        }
+    },[])
+
     return (
         <div className="min-h-screen bg-neutral-50">
             {/* Header */}
-            <header className="bg-white border-b border-neutral-200">
-                <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-                    <div className="flex items-center gap-8">
-                        <h1 className="text-2xl font-bold text-neutral-900">PayFlow</h1>
-                        <div className="hidden md:block text-sm text-neutral-600">
-                            {companyData.name}
-                        </div>
-                    </div>
-                    <div className="flex items-center gap-4">
-                        <button className="p-2 text-neutral-600 hover:text-neutral-900 transition-colors">
-                            <Bell size={20} />
-                        </button>
-                        <button className="p-2 text-neutral-600 hover:text-neutral-900 transition-colors">
-                            <Settings size={20} />
-                        </button>
-                        <div className="w-10 h-10 bg-neutral-900 text-white rounded-lg flex items-center justify-center text-sm font-bold">
-                            {companyData.name.charAt(0)}
-                        </div>
-                    </div>
-                </div>
-            </header>
+            <Navbar/>
 
             {/* Navigation Tabs */}
             <div className="bg-white border-b border-neutral-200">
