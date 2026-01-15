@@ -7,7 +7,7 @@ import bcrypt from 'bcryptjs';
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
 
     try {
-        connectDb();
+        await connectDb();
         if (req.method !== "POST") {
             return res.status(405).json({ message: "Method not allowed" });
         }
@@ -36,7 +36,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         await newUser.save();
 
         return res.status(201).json({ message: "User Created!" })
-    } catch (error: any) {
+    } catch (error : any) {
         console.log(error)
         return res.status(500).json({message: error.message})
     }
